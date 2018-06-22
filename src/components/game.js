@@ -12,8 +12,7 @@ export default class Game extends React.Component {
         this.state = {
             guesses: [],
             feedback: 'Take a guess!',
-            // secretNum: Math.round(Math.random()*100)
-            secretNum: 4
+            correctAnswer: Math.floor(Math.random() * 100)
         }
 
         this.submit = this.submit.bind(this);
@@ -24,20 +23,36 @@ export default class Game extends React.Component {
         const guess = (e.target.userGuess.value);
 
         if (!this.state.guesses.includes(guess)) {
-            this.compareNumbers(guess);
+            const difference = Math.abs(guess - this.state.correctAnswer);
+
+            var feedback;
+            if (difference >= 50) {
+                feedback = 'cold';
+            } else if (difference >= 20) {
+                feedback = 'Getting warmer';
+            } else if (difference >= 10) {
+                feedback = 'Getting hot';
+            } else if (difference >= 1) {
+                feedback = 'You\'re on fire!';
+            } else {
+                feedback = 'You got it!'
+            }
+    
             this.setState({
-                guesses: this.state.guesses.concat(guess)
+                    feedback,
+                    guesses: [...this.state.guesses, guess]
             })
+
         } else {
-            alert('You\'ve already guessed that number!');
+            this.setState({...this.state, feedback: 'You already guessed that number!'})
+        }
+
+        if (isNaN(guess)) {
+            this.setState({ ...this.state, feedback: 'Please enter a valid number'});
+            return;
         }
     }
 
-    compareNumbers(guess){
-        if (guess < this.state.secretNum) {
-            this.setState({ ...this.state, feedback: 'cold' });
-        }
-    }
 
     render() {
         return (
