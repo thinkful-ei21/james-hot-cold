@@ -3,3 +3,8 @@
 	font-weight: 700;
 	font-size: 1.5em;
 }
+
+p {
+    position: relative;
+    bottom: 110px;
+}

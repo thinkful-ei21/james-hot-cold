@@ -9,5 +9,13 @@ h2 {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
     color: #fff;
-    width: 300px;
+    width: 380px;
+}
+
+section {
+    width: 380px;
+    height: 380px;
+    margin: auto;
+    background-color: #394264;
+    border-radius: 5px;
 }

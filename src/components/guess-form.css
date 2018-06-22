@@ -22,7 +22,9 @@ input.button {
 	-moz-transition: background 1s ease-in-out;
 	-ms-transition: background 1s ease-in-out;
 	-o-transition: background 1s ease-in-out;
-	transition: background 1s ease-in-out;
+    transition: background 1s ease-in-out;
+    position: relative;
+    top: 25px;
 }
 
 input.button:hover {
