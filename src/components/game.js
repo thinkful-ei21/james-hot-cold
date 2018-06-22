@@ -12,10 +12,18 @@ export default class Game extends React.Component {
         this.state = {
             guesses: [],
             feedback: 'Take a guess!',
-            correctAnswer: Math.floor(Math.random() * 100)
+            correctAnswer: Math.round(Math.random() * 100)
         }
 
         this.submit = this.submit.bind(this);
+    }
+
+    restartGame(){
+        this.setState({
+            guesses: [].sort(),
+            feedback: 'Take a guess!',
+            correctAnswer: Math.round(Math.random() * 100)
+        })
     }
 
     submit(e){
@@ -35,15 +43,16 @@ export default class Game extends React.Component {
             } else if (difference >= 1) {
                 feedback = 'You\'re on fire!';
             } else {
-                feedback = 'You got it!'
+                feedback = 'You got it! Click New Game to start again.'
             }
     
             this.setState({
                     feedback,
-                    guesses: [...this.state.guesses, guess]
+                    guesses: [...this.state.guesses, guess].sort(function(a, b){return a-b})
             })
 
-        } else {
+        } 
+        else {
             this.setState({...this.state, feedback: 'You already guessed that number!'})
         }
 
@@ -51,13 +60,15 @@ export default class Game extends React.Component {
             this.setState({ ...this.state, feedback: 'Please enter a valid number'});
             return;
         }
+
+        e.target.userGuess.value = '';
     }
 
 
     render() {
         return (
             <div>
-                <Header />
+                <Header onRestartGame={() => this.restartGame()}/>
                 <GuessSection feedback={this.state.feedback} submit={this.submit}/>
                 <GuessCount count={this.state.guesses.length} />
                 <GuessList guesses={this.state.guesses} />
